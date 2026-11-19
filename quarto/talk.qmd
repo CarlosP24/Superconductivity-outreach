@@ -4,9 +4,7 @@
 # tren levitante, con un cuprato, imanes de neodimio y nitrógeno líquido).
 # Contenido a partir de Visitas-Superconductividad-2026.pptx (carpeta superior).
 title: "Cuando los electrones bailan juntos"
-author:
-  - name: Carlos Payá
-affiliation: "Investigador predoctoral · Instituto de Ciencia de Materiales de Madrid (ICMM-CSIC)"
+affiliation: "Instituto de Ciencia de Materiales de Madrid (ICMM-CSIC)"
 event: "Superconductividad"
 hero:
   - src: assets/img/title_art.svg
@@ -26,30 +24,24 @@ format:
 ## {#hook .hook .no-kicker}
 
 ::: {.hook-body}
-[Un imán flotando en el aire.<br>Sin pilas, sin cables y sin trucos.]{.hook-lead}
+[La mecánica cuántica manda en el mundo de los átomos.<br>A nuestra escala, casi nunca se nota.]{.hook-lead}
 
-[¿Cómo consigue un trozo de cerámica helada que un imán levite?]{.hook-q}
+[¿Podemos ver la mecánica cuántica a simple vista?]{.hook-q}
 :::
 
 ::: {.notes}
-(0:40) [Portada] Me presento: soy Carlos, investigo en el ICMM, que es un centro del CSIC.
+(0:40) [Portada] Presentarse: nombre y qué investigas en el ICMM, que es un centro del CSIC.
 Hoy vamos a hablar de superconductores: qué son, por qué existen y para qué sirven. Y al
 final los vais a ver funcionar delante de vosotros.
 
-[Esta diapositiva] Dentro de un rato vais a ver esto: un imán flotando encima de una
-pieza negra que parece una piedra. No hay pilas ni hilos. La pregunta de hoy es cómo lo
-consigue. Al final de la charla tendréis la respuesta.
+[Esta diapositiva] La mecánica cuántica explica los átomos, los electrones y la luz, y es
+muy rara: partículas que son ondas, cosas que están en dos sitios a la vez. Pero en la vida
+diaria no la vemos: una pelota no se comporta como una onda. La pregunta de hoy: ¿hay algún
+caso en el que la cuántica se vea a simple vista, a nuestra escala? Al final, antes de las
+demostraciones, tendréis la respuesta. (No adelantar lo que se verá en la demostración.)
 :::
 
-# El descubrimiento {.part data-num="01" data-kicker="01 · El descubrimiento" data-sub="Un metal que, al enfriarlo, deja de frenar la corriente"}
-
-![](assets/img/part1.svg){.part-art}
-
-::: {.notes}
-(0:05) Empezamos por la historia: cómo se descubrió.
-:::
-
-## En 1911, la resistencia del mercurio cayó de golpe a cero
+## En 1911, la resistencia del mercurio cayó de golpe a cero {data-kicker="01 · El descubrimiento"}
 
 :::: {.columns}
 ::: {.column width="38%"}
@@ -95,31 +87,27 @@ temperatura crítica, T_c. Ganó el Nobel en 1913.
 más frío que puede existir.)
 :::
 
-## Un superconductor tiene dos superpoderes
+## Un superconductor tiene dos superpoderes {data-kicker="01 · El descubrimiento"}
 
 ::: {.powers}
 ::: {.card .power}
 [1 · Resistencia cero]{.card-h}
 
-::: {.power-row}
-::: {.qm-widget data-widget="ring" data-size="330" style="width:330px;height:330px"}
+::: {.qm-widget data-widget="rings" data-w="640" data-h="380" style="width:640px;height:380px"}
 :::
 
-::: {.power-txt}
-Sin resistencia no se pierde nada en calor: $P = I^2 R = 0$
-
-En un anillo, la corriente da vueltas **sin pila, durante años**
-:::
+::: {.fragment .qm-step}
+Sin resistencia no se pierde energía en calor, [$P = I^2 R = 0$]{.nowrap}: la corriente gira **sin pila, durante años**
 :::
 :::
 
 ::: {.card .power .fragment .qm-step}
 [2 · Efecto Meissner (1933)]{.card-h}
 
-::: {.qm-widget data-widget="meissner" data-w="620" data-h="360" data-cold="2" style="width:620px;height:360px"}
+::: {.qm-widget data-widget="meissner" data-w="620" data-h="330" data-cold="3" style="width:620px;height:330px"}
 :::
 
-Por debajo de $T_c$ expulsa el campo magnético: **por eso el imán levita**
+Por debajo de $T_c$, el superconductor **expulsa el campo magnético** de su interior
 :::
 :::
 
@@ -130,30 +118,25 @@ En clase: [1º Bach · Potencia y rendimiento]{.chip} [2º Bach · Inducción: l
 :::
 
 ::: {.notes}
-(1:20) Dos propiedades, y las dos las veréis al final.
+(1:30) Dos propiedades, y las dos las veréis al final.
 
-Primera: resistencia cero. Si R = 0, la potencia que se pierde en calor, I²R, es cero. Si
-metemos una corriente en un anillo superconductor, da vueltas sin pila. En los años 50
-alguien (S. C. Collins) mantuvo una corriente así durante dos años y medio sin medir
-ninguna pérdida; paró porque se acabó el helio.
+Primera: resistencia cero. A la izquierda, un anillo de metal normal: para que haya
+corriente hace falta una pila, y los electrones chocan y lo calientan (destellos naranjas).
+Si quitamos la pila, la corriente se para enseguida.
+[click] A la derecha, un anillo superconductor: sin pila, la corriente sigue girando. Si
+R = 0, la potencia que se pierde en calor, I²R, es cero. En los años 50, S. C. Collins
+mantuvo una corriente así durante dos años y medio sin medir ninguna pérdida; paró porque
+se acabó el helio.
 
 [click] Segunda: el efecto Meissner, de 1933. Caliente, el material es normal y el campo
 magnético lo atraviesa. [click] Al enfriarlo por debajo de T_c, el campo se queda fuera:
-las líneas lo rodean. Por eso un imán encima no puede "entrar" y se queda flotando.
+las líneas lo rodean. (Qué consecuencias tiene, mejor que lo descubran en la demostración.)
 
 Ojo: esto no es la resistencia cero llevada al extremo, es una propiedad distinta. (Los
 botones Caliente/Frío sirven para repetirlo si hay preguntas.)
 :::
 
-# ¿Por qué ocurre? {.part data-num="02" data-kicker="02 · ¿Por qué ocurre?" data-sub="Un baile cuántico de electrones"}
-
-![](assets/img/part2.svg){.part-art}
-
-::: {.notes}
-(0:05) Ahora, la parte difícil: por qué pasa esto.
-:::
-
-## La resistencia es el rozamiento de los electrones
+## La resistencia es el rozamiento de los electrones {data-kicker="02 · ¿Por qué ocurre?"}
 
 :::: {.columns}
 ::: {.column width="55%"}
@@ -162,10 +145,13 @@ botones Caliente/Frío sirven para repetirlo si hay preguntas.)
 :::
 ::: {.column width="41%"}
 ::: {.photo .disco}
-![](assets/img/discoteca.jpg)
+<video data-autoplay loop muted playsinline poster="assets/video/baile_choques_poster.jpg" src="assets/video/baile_choques.mp4"></video>
 :::
 
-[Como cruzar una discoteca llena]{.figcap}
+::: {.vcap}
+[Como cruzar una pista llena: todos se mueven y chocan]{.figcap}
+[Vídeo: Koffermejia, CC0]{.credit}
+:::
 
 ::: {.items .compact}
 ::: {.item}
@@ -188,12 +174,14 @@ Impurezas y defectos del material
 [−]{.ico .red}
 
 ::: {.txt}
-Otros electrones
+Electrones
 :::
 :::
 :::
 :::
 ::::
+
+[]{.fragment .qm-step}
 
 ::: {.key .orange .fragment .fade-up}
 Cada choque calienta el cable (efecto Joule). ¿Por qué se calienta el cargador del móvil?
@@ -209,20 +197,26 @@ entre los iones positivos (enlace metálico). Cuando enchufamos una pila, avanza
 chocan con los iones, que vibran más cuanto más caliente está el metal, con impurezas y
 defectos, y entre ellos.
 
-Es como cruzar una discoteca llena: cada uno baila a su aire y no puedes avanzar sin
-chocar. Los destellos naranjas son esos choques: energía que se pierde en calor. (Mover
-el deslizador de temperatura: más calor, más vibración, más choques.)
+Es como cruzar una pista de baile llena (el vídeo): todos se mueven a la vez, cada uno a
+su aire, y no hay forma de avanzar sin chocar. Los destellos naranjas son esos choques: energía que se pierde en calor.
+[click] Subimos la temperatura: los iones vibran más y hay muchos más choques. (El
+deslizador sigue activo para las preguntas.)
 
 [click] Pregunta: ¿por qué se calienta el cargador del móvil? Por esto mismo: efecto
 Joule.
 :::
 
-## Por debajo de $T_c$, los electrones bailan en pareja
+## Por debajo de $T_c$, los electrones bailan en pareja {data-kicker="02 · ¿Por qué ocurre?"}
 
 :::: {.columns .v-center}
 ::: {.column width="54%"}
 ::: {.photo}
-![](assets/img/baile.jpg)
+<video data-autoplay loop muted playsinline poster="assets/video/baile_pareja_poster.jpg" src="assets/video/baile_pareja.mp4"></video>
+:::
+
+::: {.vcap}
+[En pareja y todos con el mismo paso]{.figcap}
+[Vídeo: Sdkb, CC BY-SA 4.0]{.credit}
 :::
 :::
 ::: {.column width="42%"}
@@ -252,7 +246,7 @@ nadie choca con nadie.
 (Coulomb). ¿Qué puede unirlos?
 :::
 
-## La red de iones hace de pegamento entre dos electrones
+## La red de iones hace de pegamento entre dos electrones {data-kicker="02 · ¿Por qué ocurre?"}
 
 ::: {.qm-widget data-widget="glue" data-w="1440" data-h="390" style="width:1440px;height:390px"}
 :::
@@ -270,7 +264,7 @@ Un electrón pasa y atrae a los iones positivos
 [2]{.ico .num .orange}
 
 ::: {.txt}
-Los iones son lentos: cuando reaccionan, el electrón ya se ha ido y deja una estela positiva
+Los iones, lentos, reaccionan tarde: queda una estela positiva
 :::
 :::
 
@@ -278,7 +272,15 @@ Los iones son lentos: cuando reaccionan, el electrón ya se ha ido y deja una es
 [3]{.ico .num .red}
 
 ::: {.txt}
-Un segundo electrón cae hacia esa estela: ya forman pareja
+Un segundo electrón cae hacia esa estela
+:::
+:::
+
+::: {.item .fragment .qm-step}
+[4]{.ico .num}
+
+::: {.txt}
+Ya forman un par de Cooper y viajan juntos
 :::
 :::
 ::::
@@ -288,13 +290,15 @@ En clase: [1º Bach · Fuerza elástica (Hooke)]{.chip} [2º Bach · Movimiento 
 :::
 
 ::: {.notes}
-(1:20) El pegamento es la propia red de iones.
+(1:30) El pegamento es la propia red de iones.
 [click] Un electrón pasa y tira de los iones positivos que tiene cerca.
 [click] Los iones pesan miles de veces más que un electrón y son lentos: cuando se han
 desplazado, el electrón ya está lejos. Detrás queda una zona con más carga positiva, una
 estela.
-[click] Un segundo electrón es atraído por esa estela. Los dos electrones no se tocan,
-pero acaban unidos a través de la red.
+[click] Un segundo electrón es atraído por esa estela.
+[click] Ya están unidos: un par de Cooper. Los dos electrones no se tocan, pero viajan
+juntos, unidos a través de la red, que va deformándose a su paso. (Ojo si preguntan: en
+un par real los dos electrones están muy lejos, a cientos de átomos; el dibujo lo encoge.)
 
 Analogía: dos bolas sobre una cama elástica. Cada una hunde la lona y la otra rueda hacia
 el hueco.
@@ -303,7 +307,7 @@ Los iones están unidos como por muelles; sus vibraciones, que en cuántica vien
 paquetes, se llaman fonones. Decimos que los electrones se atraen "intercambiando fonones".
 :::
 
-## Todos los pares bailan la misma coreografía
+## Todos los pares bailan la misma coreografía {data-kicker="02 · ¿Por qué ocurre?"}
 
 ::: {.qm-widget data-widget="dance" data-w="1440" data-h="370" style="width:1440px;height:370px"}
 :::
@@ -352,15 +356,7 @@ la vez, y una impureza no puede.
 T_c, se acabó el baile.
 :::
 
-# ¿Para qué sirve? {.part data-num="03" data-kicker="03 · ¿Para qué sirve?" data-sub="La carrera por el frío, y dónde los usamos ya"}
-
-![](assets/img/part3.svg){.part-art}
-
-::: {.notes}
-(0:05) ¿Y todo esto para qué sirve?
-:::
-
-## Desde 1986 basta con nitrógeno líquido, que es barato
+## Desde 1986 basta con nitrógeno líquido, que es barato {data-kicker="03 · ¿Para qué sirve?"}
 
 :::: {.columns}
 ::: {.column width="68%"}
@@ -400,7 +396,7 @@ de atmósferas, entre dos diamantes. No sirven para un cable.
 (Puntos huecos: a alta presión. Récord a presión normal: cupratos de mercurio, −140 °C.)
 :::
 
-## Ya hay superconductores en hospitales, aceleradores y trenes
+## Ya hay superconductores en hospitales, aceleradores y trenes {data-kicker="03 · ¿Para qué sirve?"}
 
 ::: {.apps}
 ::: {.app}
@@ -456,7 +452,7 @@ el récord de 603 km/h en 2015. Y cables: en Essen (Alemania) un kilómetro de c
 superconductor, enfriado con nitrógeno, reparte electricidad sin perder energía en calor.
 :::
 
-## Muchos ordenadores cuánticos usan superconductores
+## Muchos ordenadores cuánticos usan superconductores {data-kicker="03 · ¿Para qué sirve?"}
 
 :::: {.columns .v-center}
 ::: {.column width="44%"}
@@ -519,15 +515,7 @@ la superposición. La foto es la "nevera": cada piso está más frío que el de 
 Siendo sinceros: hoy son prototipos con errores; los útiles a gran escala tardarán años.
 :::
 
-# En directo {.part data-num="04" data-kicker="04 · En directo" data-sub="Por qué el imán ni se cae ni se escapa"}
-
-![](assets/img/levitacion.jpg){.part-art}
-
-::: {.notes}
-(0:05) Una última cosa antes de las demostraciones, para entender lo que vais a ver.
-:::
-
-## En los de tipo II, los vórtices dejan el imán atrapado en el aire
+## En los de tipo II, los vórtices dejan el imán atrapado en el aire {data-kicker="04 · En directo"}
 
 :::: {.columns}
 ::: {.column width="52%"}
@@ -586,7 +574,7 @@ de campo magnético.
 ::: {.ccard}
 ![](assets/img/part1.svg)
 
-#### Resistencia cero y levitación
+#### Dos superpoderes
 
 Por debajo de $T_c$ la corriente no pierde energía y el campo magnético se queda fuera
 :::
@@ -609,19 +597,20 @@ En hospitales, en el CERN, en trenes y en los ordenadores cuánticos
 :::
 
 ::: {.key .fragment .fade-up}
-**¿Por qué levita el imán?** El superconductor expulsa su campo magnético, y los vórtices lo dejan anclado en el aire
+**¿Podemos ver la cuántica a simple vista?** Sí: en un superconductor, billones de electrones forman una sola onda cuántica. Ahora lo vais a ver
 :::
 
 ::: {.notes}
 (0:40) Resumen en tres ideas. [click] [click] [click] Y la respuesta a la pregunta del
-principio: el imán levita porque el superconductor expulsa su campo, y no se cae porque los
-vórtices lo dejan anclado.
+principio: sí, la cuántica se puede ver a simple vista. En un superconductor, billones de
+electrones se comportan como una sola onda cuántica, y eso es lo que vais a ver ahora,
+encima de la mesa.
 :::
 
 ## ¡Gracias! {.no-kicker .no-logo .thanks}
 
-:::: {.columns}
-::: {.column width="38%"}
+:::: {.columns .v-center}
+::: {.column width="52%"}
 ::: {.photo-map}
 ![](assets/private/icmm_building.jpeg){.photo}
 
@@ -633,27 +622,15 @@ vórtices lo dejan anclado.
 :::
 
 [Instituto de Ciencia de Materiales de Madrid (ICMM-CSIC), en Cantoblanco]{.figcap}
-
-[**Carlos Payá**<br>Investigador predoctoral]{.whoami}
-
-[Para saber más: wp.icmm.csic.es/superconductividad<br>@supercond_icmm · @icmm_csic]{.contact}
 :::
-::: {.column width="58%"}
-::: {.people}
-::: {.group}
-[¿Quiénes somos?]{.group-h}
+::: {.column width="42%"}
+::: {.more}
+[Para saber más]{.more-h}
 
-::: {.avatars .team}
-[![](assets/private/avatar_leni.jpg)Leni Bascones]{.avatar}
-[![](assets/private/avatar_mjose.jpg)María José Calderón]{.avatar}
-[![](assets/private/avatar_ruben.jpg)Rubén Seoane]{.avatar}
-[![](assets/private/avatar_carlos.jpg)Carlos Payá]{.avatar .me}
-[![](assets/private/avatar_daniel.jpg)Daniel Míchel Pino]{.avatar}
-[![](assets/private/avatar_joseluis.jpg)José Luis del Olmo]{.avatar}
-[![](assets/private/avatar_aday.jpg)Aday Cárdenas]{.avatar}
-[![](assets/private/avatar_estrella.jpg)Estrella Sánchez]{.avatar}
-:::
-:::
+[wp.icmm.csic.es/superconductividad]{.more-web}
+
+[\@supercond_icmm]{.more-social}
+[\@icmm_csic]{.more-social}
 :::
 :::
 ::::
@@ -667,9 +644,8 @@ vórtices lo dejan anclado.
 :::
 
 ::: {.notes}
-(0:20) Somos un grupo de físicos teóricos del ICMM que estudia materiales superconductores
-y cuánticos. Si os ha gustado, en la web y en redes hay más. Y ahora, lo prometido: vamos a
-verlo.
+(0:20) En el ICMM estudiamos materiales superconductores y cuánticos. Si os ha gustado, en la
+web y en redes hay más. Y ahora, lo prometido: vamos a verlo.
 :::
 
 ## Ahora, en directo: apostad antes de mirar {data-kicker="04 · En directo"}

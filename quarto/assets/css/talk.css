@@ -1,4 +1,4 @@
-/* Layout details of this talk (the theme lives in _extensions/CarlosP24/qudyma) */
+/* Layout details of this talk (the theme lives in _extensions/divulga) */
 
 /* ------------------------------------------------------------------ widget text */
 .reveal .sc-text {
@@ -256,17 +256,39 @@
   color: var(--qd-ink-2);
 }
 
-/* the "who we are" group on the closing slide */
-.reveal .thanks .avatars.team {
-  display: grid;
-  grid-template-columns: repeat(4, 160px);
-  gap: 22px 30px;
-  justify-content: center;
+/* "para saber más" on the closing slide */
+.reveal .more {
+  padding: 34px 0 34px 40px;
+  border-left: 8px solid var(--qd-red);
 }
 
-.reveal .thanks .avatars.team > p { display: contents; }
-.reveal .thanks .avatar.me { color: var(--qd-red); font-weight: 700; }
-.reveal .thanks .avatar.me img { border: 3px solid var(--qd-red); }
+.reveal .more p { margin: 0; }
+
+.reveal .more-h {
+  display: block;
+  font-family: "Copperplate", "Copperplate Gothic Light", "Gill Sans", serif;
+  font-size: 26px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--qd-red);
+  margin-bottom: 18px;
+}
+
+.reveal .more-web {
+  display: block;
+  font-size: 33px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--qd-ink);
+  margin-bottom: 22px;
+}
+
+.reveal .more-social {
+  display: block;
+  font-size: 32px;
+  line-height: 1.35;
+  color: var(--qd-ink-2);
+}
 
 .reveal .funding .thanks-to {
   font-size: 22px;
@@ -340,3 +362,36 @@
 .reveal .demo .dcard .txt { font-size: 26px; }
 .reveal .demo .dcard .it { font-size: 31px; }
 .reveal .demo .dcard { padding: 26px 30px; }
+
+/* captions under the two rings */
+.reveal .sc-cap {
+  font-size: 22px;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--qd-ink-2);
+}
+
+.reveal .sc-cap b { color: var(--qd-ink); }
+
+/* looping dance videos (in place of photos) */
+.reveal .photo video {
+  display: block;
+  width: 100%;
+  max-width: none;    /* reveal caps media at 95% */
+  max-height: none;
+  border-radius: 3px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.reveal .photo.disco video { aspect-ratio: 640 / 300; }
+
+.reveal .vcap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.reveal .vcap p { margin: 0; display: contents; }
+.reveal .vcap .credit { margin: 6px 0 0 0; white-space: nowrap; }

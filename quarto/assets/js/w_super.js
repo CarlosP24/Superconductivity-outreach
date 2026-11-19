@@ -2,10 +2,10 @@
 // except 'tc', which plots the record critical temperatures of each family.
 //
 //   rt          resistance of mercury against temperature (1911)
-//   ring        persistent current: pairs circling a ring forever (looped animation)
+//   rings       a metal ring with a battery (collisions, heat) and a superconducting one without
 //   meissner    field lines through a sample, expelled below Tc (buttons + steps)
-//   scatter     electrons crossing a vibrating lattice: collisions heat the metal (slider)
-//   glue        an electron leaves a positive wake in the lattice that attracts another one
+//   scatter     electrons crossing a vibrating lattice: collisions heat the metal (cold, then hot)
+//   glue        an electron leaves a positive wake that attracts another; the pair travels
 //   dance       normal metal (each on its own) vs superconductor (one choreography)
 //   tc          the race for the critical temperature, 1911–2019
 //   vortex      type II: field lines through pinned vortices hold the magnet in place
@@ -114,39 +114,95 @@ QM.register('rt', (el, opts) => {
   return { go: show, leave() { if (stop) stop(); } };
 });
 
-// ---------------------------------------------------------------------------- ring
-// Pairs going round a superconducting ring with no battery (looped animation)
-QM.register('ring', (el, opts) => {
+// ---------------------------------------------------------------------------- rings
+// Two rings side by side. Left: a normal metal with a battery; electrons go round in fits
+// and starts, colliding (orange flashes: heat). Right (from step opts.b on): a
+// superconductor with no battery; pairs go round smoothly, for ever.
+QM.register('rings', (el, opts) => {
   const C = QM.c;
-  const S = +opts.size || 300;
-  const ctx = SC.canvas(el, 0, 0, S, S);
-  const cx = S / 2, cy = S / 2, R = S * 0.36, band = S * 0.13;
-  const N = 9;
-  const draw = (t) => {
-    ctx.clearRect(0, 0, S, S);
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI);
-    ctx.strokeStyle = C.navy_tint; ctx.lineWidth = band; ctx.stroke();
-    ctx.strokeStyle = C.navy; ctx.lineWidth = 2;
-    for (const r of [R + band / 2, R - band / 2]) { ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI); ctx.stroke(); }
+  const W = +opts.w || 640, H = +opts.h || 330, showB = +(opts.b || 1);
+  const R = 118, band = 32, cy = 142;
+  const mk = (x) => {
+    const b = QM.box(el, x, 0, W / 2, H);
+    b.classList.add('qm-fade');
+    return { box: b, ctx: SC.canvas(b, 0, 0, W / 2, H), cx: W / 4 };
+  };
+  const A = mk(0), B = mk(W / 2);
+  const cap = (P, html) => SC.text(P.box, P.cx, cy + R + band / 2 + 22, html, { ax: 0.5, ay: 0, cls: 'sc-cap' });
+  cap(A, '<b>Metal, con pila</b><br>choca y se calienta');
+  cap(B, '<b>Superconductor, sin pila</b><br>gira sin pérdidas');
+  const rnd = SC.rng(11);
+  const gapA = 0.42;                                     // half-angle taken by the battery
+  const bat = Math.PI / 2;                               // battery at the bottom
+  const elsA = d3.range(10).map((k) => ({ th: (2 * Math.PI * k) / 10 + 0.2 * rnd(), v: 0.8 }));
+  const sparks = [];
+  const ringPath = (ctx, cx, a0, a1, color, edge) => {
+    ctx.lineCap = 'butt';
+    ctx.beginPath(); ctx.arc(cx, cy, R, a0, a1); ctx.strokeStyle = color; ctx.lineWidth = band; ctx.stroke();
+    ctx.strokeStyle = edge; ctx.lineWidth = 2;
+    for (const r of [R + band / 2, R - band / 2]) { ctx.beginPath(); ctx.arc(cx, cy, r, a0, a1); ctx.stroke(); }
+  };
+  const arrow = (ctx, cx, a0, a1, color) => {           // current direction, inside the ring
+    const r = R - band * 1.2;
+    ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(cx, cy, r, a0, a1, true); ctx.stroke();
+    const ex = cx + r * Math.cos(a1), ey = cy + r * Math.sin(a1);
+    const tx = Math.sin(a1), ty = -Math.cos(a1);         // tangent, counterclockwise
+    ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(ex - 11 * tx + 6 * Math.cos(a1), ey - 11 * ty + 6 * Math.sin(a1));
+    ctx.moveTo(ex, ey); ctx.lineTo(ex - 11 * tx - 6 * Math.cos(a1), ey - 11 * ty - 6 * Math.sin(a1)); ctx.stroke();
+  };
+  const drawA = (dt) => {
+    const { ctx, cx } = A;
+    ctx.clearRect(0, 0, W / 2, H);
+    ringPath(ctx, cx, bat + gapA, bat - gapA + 2 * Math.PI, '#ECE7E4', C.ink_2);
+    for (const e of elsA) {
+      e.v += (0.8 - e.v) * 2.5 * dt;                   // the battery pushes them on
+      if (rnd() < 0.5 * dt) {                          // a collision: it bounces and heats the metal
+        e.v = -0.25;
+        sparks.push({ th: e.th, age: 0 });
+      }
+      e.th -= e.v * dt;
+    }
+    for (const sp of sparks) sp.age += dt;
+    while (sparks.length && sparks[0].age > 0.6) sparks.shift();
+    for (const sp of sparks) {
+      const k = sp.age / 0.6;
+      ctx.beginPath(); ctx.arc(cx + R * Math.cos(sp.th), cy + R * Math.sin(sp.th), 5 + 18 * k, 0, 2 * Math.PI);
+      ctx.fillStyle = `rgba(217,130,43,${0.6 * (1 - k)})`; ctx.fill();
+    }
+    for (const e of elsA) SC.electron(ctx, cx + R * Math.cos(e.th), cy + R * Math.sin(e.th), 8, C, false);
+    // the battery
+    const bw = 2 * R * Math.sin(gapA) + 6, bh = 40, by = cy + R;
+    ctx.fillStyle = C.ink_2; ctx.fillRect(cx - bw / 2, by - bh / 2, bw, bh);
+    ctx.fillRect(cx + bw / 2, by - 8, 7, 16);
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(cx + bw / 2 - 26, by); ctx.lineTo(cx + bw / 2 - 12, by);
+    ctx.moveTo(cx + bw / 2 - 19, by - 7); ctx.lineTo(cx + bw / 2 - 19, by + 7);
+    ctx.moveTo(cx - bw / 2 + 12, by); ctx.lineTo(cx - bw / 2 + 26, by); ctx.stroke();
+    arrow(ctx, cx, -0.6, -2.2, C.red);
+  };
+  const drawB = (t) => {
+    const { ctx, cx } = B;
+    ctx.clearRect(0, 0, W / 2, H);
+    ringPath(ctx, cx, 0, 2 * Math.PI, C.navy_tint, C.navy);
+    const N = 8, ph = 2.4 * t;
     for (let i = 0; i < N; i++) {
-      const th = -0.9 * t + (2 * Math.PI * i) / N;
-      const ph = 2.4 * t;
-      for (const s of [-1, 1]) {
-        const a = th + s * 0.09 * Math.cos(ph), rr = R + s * 0.14 * band * Math.sin(ph) * 2;
-        SC.electron(ctx, cx + rr * Math.cos(a), cy + rr * Math.sin(a), S * 0.022, C, false);
+      const th = -0.8 * t + (2 * Math.PI * i) / N;
+      for (const sg of [-1, 1]) {
+        const a = th + sg * 0.08 * Math.cos(ph), rr = R + sg * 0.28 * band * Math.sin(ph);
+        SC.electron(ctx, cx + rr * Math.cos(a), cy + rr * Math.sin(a), 8, C, false);
       }
     }
-    // direction of the current
-    ctx.strokeStyle = C.red; ctx.lineWidth = 3; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.arc(cx, cy, R - band * 1.15, -2.4, -0.9, false); ctx.stroke();
-    const a = -2.4, rr = R - band * 1.15;
-    const ex = cx + rr * Math.cos(a), ey = cy + rr * Math.sin(a);
-    ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(ex + 12, ey - 3); ctx.moveTo(ex, ey); ctx.lineTo(ex + 3, ey + 12); ctx.stroke();
+    arrow(ctx, cx, -0.6, -2.2, C.red);
   };
-  const L = SC.loop((dt, t) => draw(t));
-  draw(0.4);
-  SC.text(el, cx, cy + 6, 'sin pila', { ax: 0.5, ay: 0.5, cls: 'sc-small sc-muted' });
-  return { enter() { if (!SC.printing()) L.start(); }, leave() { L.stop(); } };
+  const L = SC.loop((dt, t) => { drawA(dt); drawB(t); });
+  for (let k = 0; k < 40; k++) drawA(1 / 60);
+  drawB(0.5);
+  return {
+    go(step) { B.box.style.opacity = step >= showB ? 1 : 0; },
+    enter() { if (!SC.printing()) L.start(); },
+    leave() { L.stop(); },
+  };
 });
 
 // ---------------------------------------------------------------------------- meissner
@@ -244,7 +300,7 @@ QM.register('scatter', (el, opts) => {
     return { x: rnd() * W, y: rnd() * H, vx: v * Math.cos(a), vy: v * Math.sin(a) };
   });
   const sparks = [];
-  let temp = +(opts.temp || 0.6);
+  let temp = 0.1;
   const pos = (o, t) => {
     const A = o.imp ? 0 : 2 + 9 * temp;
     return [o.x + A * Math.sin(o.w1 * t + o.p1), o.y + A * Math.sin(o.w2 * t + o.p2)];
@@ -299,16 +355,32 @@ QM.register('scatter', (el, opts) => {
   for (let k = 0; k < 90; k++) step(1 / 60, k / 60);
   draw(1.5);
   const names = ['baja', 'media', 'alta'];
-  QM.slider(el, {
+  let stop = null;
+  const slider = QM.slider(el, {
     x: W / 2 - 230, y: H + 18, w: 460, min: 0, max: 1, step: 0.01, value: temp, tex: '\\text{Temperatura}',
-    fmt: (x) => names[Math.min(2, Math.floor(x * 3))], oninput: (x) => { temp = x; draw(1.5); },
-  }).el.querySelector('.qm-slider-label').textContent = 'Temperatura';
-  return { enter() { if (!SC.printing()) L.start(); }, leave() { L.stop(); } };
+    fmt: (x) => names[Math.min(2, Math.floor(x * 3))],
+    oninput: (x) => { if (stop) stop(); temp = x; draw(1.5); },
+  });
+  slider.el.querySelector('.qm-slider-label').textContent = 'Temperatura';
+  // step 0: cold metal; from step 1 on: hot (the slider moves by itself, and stays live)
+  const temps = [0.1, 0.93];
+  return {
+    go(step, animate) {
+      const T = temps[QM.clamp(step, 0, 1)];
+      if (stop) stop();
+      if (!animate) { temp = T; slider.set(T); draw(1.5); return; }
+      const T0 = temp;
+      stop = QM.tween(900, (k) => { temp = QM.lerp(T0, T, k); slider.set(temp); });
+    },
+    enter() { if (!SC.printing()) L.start(); },
+    leave() { L.stop(); if (stop) stop(); },
+  };
 });
 
 // ---------------------------------------------------------------------------- glue
-// Steps: 0 = an electron enters, 1 = it attracts the ions next to it, 2 = it has gone and
-// left a positive wake, 3 = a second electron is pulled into the wake.
+// Steps: 0 = an electron enters, 1 = it attracts the ions next to it, 2 = it moves on and
+// leaves a positive wake, 3 = a second electron is pulled into the wake, 4 = the two travel
+// together as a Cooper pair (looped). The lattice is periodic, so the pair can wrap round.
 QM.register('glue', (el, opts) => {
   const C = QM.c;
   const W = +opts.w || 1440, H = +opts.h || 330;
@@ -318,88 +390,115 @@ QM.register('glue', (el, opts) => {
   const yc = H / 2, gap = 0.32 * H, n = 12, sp = W / n, Ri = 22, Re = 24, D = 0.11 * H;
   const ions = [];
   for (let i = 0; i < n; i++) for (const s of [-1, 1]) ions.push({ x: sp * (i + 0.5), s });
-  // displacement of an ion at distance s behind the electron: slow to react, slow to relax
-  const wake = (s) => (s > 0 ? (1 - Math.exp(-s / 80)) * Math.exp(-s / 330) / 0.7 : 0);
-  let e1 = 0, e2 = -100, link = 0, pull = 0;
+  const mod = (x) => ((x % W) + W) % W;
+  // displacement of an ion at distance s behind the electron (periodic): slow to react,
+  // slow to relax
+  let wrap = false;                                      // periodic only while the pair loops
+  const wake = (x) => {
+    const s = wrap ? mod(e1 - x) : e1 - x;
+    if (s <= 0) return 0;
+    return Math.min(1, (1 - Math.exp(-s / 80)) * Math.exp(-s / 330) / 0.7);
+  };
+  let e1 = 0, e2 = -1e4, link = 0, pull = 0, pair = 0;
+  const arrowR = (x0, len, w, head) => {
+    ctx.beginPath(); ctx.moveTo(x0, yc); ctx.lineTo(x0 + len, yc);
+    ctx.moveTo(x0 + len - head, yc - 0.8 * head); ctx.lineTo(x0 + len, yc); ctx.lineTo(x0 + len - head, yc + 0.8 * head);
+    ctx.lineWidth = w; ctx.stroke();
+  };
+  const tagWake = SC.text(box, 0, yc, 'estela de carga +', { ax: 0.5, ay: 0.5, cls: 'sc-tag qm-fade', color: '#fff' });
+  tagWake.style.background = C.orange;
+  const tagPair = SC.text(box, 0, yc, 'par de Cooper', { ax: 0.5, ay: 0.5, cls: 'sc-tag qm-fade', color: '#fff' });
+  tagPair.style.background = C.red;
+  let showWake = 0;
   const draw = () => {
     ctx.clearRect(0, 0, W, H);
     // wake: positive charge left behind (orange glow)
     const g = ctx.createLinearGradient(0, 0, W, 0);
-    for (let k = 0; k <= 40; k++) {
-      const x = (W * k) / 40, w = Math.min(1, wake(e1 - x));
-      g.addColorStop(k / 40, `rgba(217,130,43,${0.32 * w})`);
-    }
+    for (let k = 0; k <= 160; k++) g.addColorStop(k / 160, `rgba(217,130,43,${0.34 * wake((W * k) / 160)})`);
     ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.ellipse(W / 2, yc, W / 2, gap * 0.95, 0, 0, 2 * Math.PI);
-    ctx.fill();
+    for (let k = 1; k <= 6; k++) {                       // soft top and bottom edges
+      const h = gap * (0.35 + 0.09 * k);
+      ctx.globalAlpha = 1 / 3.2;
+      ctx.fillRect(0, yc - h, W, 2 * h);
+    }
+    ctx.globalAlpha = 1;
     // ions
-    for (const o of ions) {
-      const w = Math.min(1, wake(e1 - o.x));
-      const y = yc + o.s * (gap - D * w);
-      SC.ion(ctx, o.x, y, Ri, C);
-    }
-    // attraction lines of the first electron (step 1)
-    if (link > 0.01) {
-      ctx.save(); ctx.globalAlpha = link; ctx.strokeStyle = C.orange; ctx.lineWidth = 2.5; ctx.setLineDash([6, 7]);
-      for (const o of ions) {
-        if (Math.abs(o.x - e1) > sp * 1.6) continue;
-        const w = Math.min(1, wake(e1 - o.x));
-        const y = yc + o.s * (gap - D * w);
-        ctx.beginPath(); ctx.moveTo(e1, yc); ctx.lineTo(o.x, y - o.s * Ri); ctx.stroke();
+    for (const o of ions) SC.ion(ctx, o.x, yc + o.s * (gap - D * wake(o.x)), Ri, C);
+    // everything that moves is drawn at x, x − W and x + W (the canvas clips the copies)
+    for (const off of [-W, 0, W]) {
+      const x1 = mod(e1) + off, x2 = x1 - (e1 - e2);
+      // attraction lines of the first electron (step 1)
+      if (link > 0.01) {
+        ctx.save(); ctx.globalAlpha = link; ctx.strokeStyle = C.orange; ctx.lineWidth = 2.5; ctx.setLineDash([6, 7]);
+        for (const o of ions) {
+          if (Math.abs(o.x - x1) > sp * 1.6) continue;
+          const y = yc + o.s * (gap - D * wake(o.x));
+          ctx.beginPath(); ctx.moveTo(x1, yc); ctx.lineTo(o.x, y - o.s * Ri); ctx.stroke();
+        }
+        ctx.restore();
       }
-      ctx.restore();
-    }
-    // pull of the second electron towards the wake (step 3)
-    if (pull > 0.01 && e2 > 0) {
-      ctx.save(); ctx.globalAlpha = pull; ctx.strokeStyle = C.red; ctx.lineWidth = 4; ctx.lineCap = 'round';
-      const x0 = e2 + Re + 12, x1 = x0 + 110;
-      ctx.beginPath(); ctx.moveTo(x0, yc); ctx.lineTo(x1, yc); ctx.moveTo(x1 - 14, yc - 11); ctx.lineTo(x1, yc); ctx.lineTo(x1 - 14, yc + 11); ctx.stroke();
-      ctx.restore();
-    }
-    // electrons
-    if (e1 > -Re && e1 < W + Re) {
-      SC.electron(ctx, e1, yc, Re, C);
-      ctx.strokeStyle = C.red; ctx.lineWidth = 4; ctx.lineCap = 'round';
-      const x0 = e1 + Re + 12, x1 = x0 + 60;
-      if (x1 < W - 4) {
-        ctx.beginPath(); ctx.moveTo(x0, yc); ctx.lineTo(x1, yc); ctx.moveTo(x1 - 12, yc - 9); ctx.lineTo(x1, yc); ctx.lineTo(x1 - 12, yc + 9); ctx.stroke();
+      const second = e2 > -5e3;
+      // the bond of the pair: a wavy dashed line through the wake (step 4)
+      if (pair > 0.01 && second) {
+        ctx.save(); ctx.globalAlpha = pair; ctx.strokeStyle = C.red; ctx.lineWidth = 3.5;
+        ctx.setLineDash([2, 10]); ctx.lineCap = 'round';
+        ctx.beginPath();
+        for (let k = 0; k <= 60; k++) {
+          const x = x2 + Re + ((x1 - x2 - 2 * Re) * k) / 60;
+          const y = yc + 14 * Math.sin((2 * Math.PI * 1.5 * k) / 60);
+          if (k) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+        }
+        ctx.stroke(); ctx.restore();
       }
+      // pull of the second electron towards the wake (step 3)
+      if (pull > 0.01 && second) {
+        ctx.save(); ctx.globalAlpha = pull; ctx.strokeStyle = C.red; ctx.lineCap = 'round';
+        arrowR(x2 + Re + 12, 110, 4, 14); ctx.restore();
+      }
+      SC.electron(ctx, x1, yc, Re, C);
+      ctx.strokeStyle = C.red; ctx.lineCap = 'round';
+      arrowR(x1 + Re + 12, 60, 4, 12);
+      if (second) SC.electron(ctx, x2, yc, Re, C);
     }
-    if (e2 > -Re) SC.electron(ctx, e2, yc, Re, C);
+    // labels follow the electrons
+    tagWake.style.left = mod(e1) - 250 + 'px';
+    tagWake.style.opacity = showWake;
+    tagPair.style.left = mod(e1 - (e1 - e2) / 2) + 'px';
+    tagPair.style.opacity = pair > 0.75 ? 1 : 0;      // after the wake tag has faded
   };
   const states = [
-    { e1: 0.06 * W, e2: -100, link: 0, pull: 0 },
-    { e1: 0.42 * W, e2: -100, link: 1, pull: 0 },
-    { e1: 0.93 * W, e2: -100, link: 0, pull: 0 },
-    { e1: 0.93 * W, e2: 0.36 * W, link: 0, pull: 1 },
+    { e1: 0.06 * W, e2: -1e4, link: 0, pull: 0, pair: 0 },
+    { e1: 0.36 * W, e2: -1e4, link: 1, pull: 0, pair: 0 },
+    { e1: 0.68 * W, e2: -1e4, link: 0, pull: 0, pair: 0 },
+    { e1: 0.68 * W, e2: 0.2 * W, link: 0, pull: 1, pair: 0 },
+    { e1: 0.88 * W, e2: 0.6 * W, link: 0, pull: 0, pair: 1 },
   ];
-  const lab = SC.text(el, 0, yc, 'estela de carga +', { ax: 0.5, ay: 0.5, cls: 'sc-tag', color: '#fff' });
-  lab.style.background = C.orange;
-  lab.classList.add('qm-fade');
-  const place = (s) => {
-    lab.style.left = 0.69 * W + 'px';
-    lab.style.top = yc + 'px';
-    lab.style.opacity = s >= 2 ? 1 : 0;
-  };
-  let stop = null;
+  // step 4: the pair keeps travelling (looped)
+  const L = SC.loop((dt) => { e1 += 150 * dt; e2 += 150 * dt; draw(); });
+  let stop = null, cur = 0;
   const go = (step, animate) => {
-    const s = QM.clamp(step, 0, 3);
-    const A = { e1, e2, link, pull }, B = states[s];
+    const s = QM.clamp(step, 0, 4);
     if (stop) stop();
-    place(s);
-    // the second electron enters from the left edge
-    if (s === 3 && e2 < 0) A.e2 = -Re;
-    if (s < 3 && B.e2 < 0 && e2 > 0) B.e2 = -100;
+    L.stop();
+    wrap = false;
+    showWake = s === 2 || s === 3 ? 1 : 0;
+    if (cur === 4 && s !== 4) animate = false;           // leaving the loop: jump
+    const B = states[s];
+    if (s === 4 && cur === 4) { draw(); }
+    const A = { e1, e2, link, pull, pair };
+    if (s >= 3 && e2 < -5e3) A.e2 = -Re;                 // the second electron enters from the left
+    cur = s;
     const set = (k) => {
-      e1 = QM.lerp(A.e1, B.e1, k); e2 = A.e2 < -50 && B.e2 < -50 ? -100 : QM.lerp(A.e2, B.e2, k);
-      link = QM.lerp(A.link, B.link, k); pull = QM.lerp(A.pull, B.pull, k);
+      e1 = QM.lerp(A.e1, B.e1, k);
+      e2 = B.e2 < -5e3 ? -1e4 : QM.lerp(A.e2, B.e2, k);
+      link = QM.lerp(A.link, B.link, k); pull = QM.lerp(A.pull, B.pull, k); pair = QM.lerp(A.pair, B.pair, k);
       draw();
     };
-    if (!animate) { set(1); return; }
-    stop = QM.tween(900, set);
+    const loop = () => { if (s === 4 && !SC.printing()) { wrap = true; L.start(); } };
+    if (!animate) { set(1); loop(); return; }
+    stop = QM.tween(900, set, loop);
   };
-  return { go, leave() { if (stop) stop(); } };
+  return { go, leave() { if (stop) stop(); L.stop(); } };
 });
 
 // ---------------------------------------------------------------------------- dance

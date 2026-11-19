@@ -43,11 +43,14 @@ Todas son dibujos ilustrativos, salvo la carrera de la temperatura crítica.
 
 ## Imágenes
 
-- Del PowerPoint original: Onnes, levitación, discoteca, baile, nevera cuántica, vórtices
-  (Isabel Guillamón, UAM), iconos, fotos del grupo.
+- Del PowerPoint original: Onnes, levitación, nevera cuántica, vórtices
+  (Isabel Guillamón, UAM), iconos.
 - Wikimedia Commons (crédito en la diapositiva): resonancia (KasugaHuang, CC BY-SA 3.0),
   túnel del LHC (Muriel, CC BY-SA 2.0), SCMaglev L0 (Hisagi, CC BY-SA 4.0), cable AmpaCity
   de Nexans (The wub, CC BY-SA 4.0).
-- `assets/private/`: logos CSIC/ICMM, edificio del ICMM y mapa (de la charla del ICTP),
-  avatares.
+- Vídeos en bucle (`assets/video/`, de Wikimedia Commons, crédito en la diapositiva):
+  pista llena (diapositiva de la resistencia), de «Bailando slam en plaza lerdo» (Koffermejia,
+  CC0), recortado a la multitud, con más brillo, hacia delante y hacia atrás; baile en pareja, de «Waltz at ContraShock 2023»
+  (Sdkb, CC BY-SA 4.0), 7–18 s con fundido de 1 s para cerrar el bucle. Sin sonido.
+- `assets/private/`: logos CSIC/ICMM, edificio del ICMM y mapa.
 - Dibujos propios: `assets/img/title_art.svg`, `part1–3.svg`.
