@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" width="560" height="360">
+  <!-- Part 02: a Cooper pair bound by the wake it leaves in the lattice of ions -->
+  <defs>
+    <radialGradient id="wake" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#D9822B" stop-opacity="0.45"/><stop offset="1" stop-color="#D9822B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="0" y="0" width="560" height="360" rx="3" fill="#F5F3F2"/>
+  <ellipse cx="270" cy="180" rx="190" ry="70" fill="url(#wake)"/>
+  <g fill="#1F5F7A">
+    <circle cx="60" cy="70" r="20"/><circle cx="160" cy="80" r="20"/><circle cx="260" cy="92" r="20"/><circle cx="360" cy="88" r="20"/><circle cx="460" cy="74" r="20"/>
+    <circle cx="60" cy="290" r="20"/><circle cx="160" cy="280" r="20"/><circle cx="260" cy="268" r="20"/><circle cx="360" cy="272" r="20"/><circle cx="460" cy="286" r="20"/>
+  </g>
+  <g stroke="#fff" stroke-width="3.4" stroke-linecap="round">
+    <path d="M51,70h18M60,61v18"/><path d="M151,80h18M160,71v18"/><path d="M251,92h18M260,83v18"/><path d="M351,88h18M360,79v18"/><path d="M451,74h18M460,65v18"/>
+    <path d="M51,290h18M60,281v18"/><path d="M151,280h18M160,271v18"/><path d="M251,268h18M260,259v18"/><path d="M351,272h18M360,263v18"/><path d="M451,286h18M460,277v18"/>
+  </g>
+  <path d="M150,180 C200,140 250,220 300,180 C340,148 380,212 420,180" fill="none" stroke="#B01220" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+  <g>
+    <circle cx="140" cy="180" r="26" fill="#B01220"/><path d="M128,180h24" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="430" cy="180" r="26" fill="#B01220"/><path d="M418,180h24" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <path d="M470,180 L530,180" stroke="#B01220" stroke-width="4" stroke-linecap="round"/><path d="M520,170 L533,180 L520,190" fill="none" stroke="#B01220" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

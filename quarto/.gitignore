@@ -1,0 +1,10 @@
+# rendered decks and Quarto scratch
+talk.html
+talk_files/
+talk-standalone.html
+*.pdf
+.quarto/
+# photos and logos (keep them out of public repos)
+assets/private/
+# figures copied in by collect_figs.sh
+assets/figs/

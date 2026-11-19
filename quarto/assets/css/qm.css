@@ -1,0 +1,202 @@
+/* Interactive figures (qm.js and widgets). Colours come from the
+   theme's --qd-* custom properties. */
+
+.reveal .qm-widget {
+  position: relative;
+  margin: 0;
+}
+
+.reveal .qm-box {
+  position: absolute;
+}
+
+.reveal .qm-svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+}
+
+.reveal .qm-canvas {
+  position: absolute;
+  image-rendering: auto;
+}
+
+.reveal .qm-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.reveal .qm-label {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--qd-ink);
+}
+
+.reveal .qm-label .katex {
+  font-size: 1em;
+}
+
+.reveal .qm-label.small {
+  font-size: 20px;
+}
+
+.reveal .qm-label.big {
+  font-size: 30px;
+}
+
+.reveal .qm-label.text {
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.reveal .qm-label.tag {
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  padding: 4px 11px 5px;
+  border-radius: 999px;
+}
+
+/* Axes */
+.reveal .qm-axis text,
+.reveal .qm-tick {
+  font-family: "DvDot", "Gill Sans", "Gill Sans MT", "Cabin", sans-serif;
+  font-size: 19px;
+  fill: var(--qd-ink-2);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.reveal .qm-axis path,
+.reveal .qm-axis line {
+  stroke: var(--qd-ink);
+  stroke-width: 1.3px;
+}
+
+.reveal .qm-frame {
+  fill: none;
+  stroke: var(--qd-ink);
+  stroke-width: 1.3px;
+}
+
+.reveal .qm-cblabel {
+  font-family: "DvDot", "Gill Sans", "Gill Sans MT", "Cabin", sans-serif;
+  font-size: 16px;
+  fill: var(--qd-ink-2);
+}
+
+.reveal .qm-svg text.qm-text {
+  font-family: "DvDot", "Gill Sans", "Gill Sans MT", "Cabin", sans-serif;
+  font-size: 18px;
+  fill: var(--qd-ink);
+}
+
+/* Controls */
+.reveal .qm-slider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 22px;
+  color: var(--qd-ink-2);
+}
+
+.reveal .qm-slider-label {
+  white-space: nowrap;
+}
+
+.reveal .qm-slider-value {
+  min-width: 70px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--qd-ink);
+  font-feature-settings: "tnum" 1;
+}
+
+.reveal .qm-slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--qd-line);
+  outline: none;
+  margin: 0;
+}
+
+.reveal .qm-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--qd-red);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--qd-red);
+  cursor: pointer;
+}
+
+.reveal .qm-slider input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--qd-red);
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+.reveal .qm-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.reveal .qm-buttons button {
+  font-family: "DvDot", "Gill Sans", "Gill Sans MT", "Cabin", sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--qd-ink-2);
+  background: #fff;
+  border: 1px solid var(--qd-line);
+  border-radius: 3px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reveal .qm-buttons button .katex {
+  font-size: 1.05em;
+}
+
+.reveal .qm-buttons button.on {
+  color: #fff;
+  background: var(--qd-ink-2);
+  border-color: var(--qd-ink-2);
+}
+
+.reveal .qm-play {
+  font-family: "DvDot", "Gill Sans", "Gill Sans MT", "Cabin", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--qd-ink-2);
+  background: var(--qd-surface);
+  border: 1px solid var(--qd-line);
+  border-radius: 3px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+/* Fades used by the widgets */
+.reveal .qm-fade {
+  transition: opacity 0.5s ease;
+}
+
+.reveal .qm-clip {
+  position: absolute;
+  overflow: hidden;
+}
+
+/* Static images handed to widgets (embedded in standalone builds) */
+.reveal .qm-widget > p:has(> img.qm-asset) {
+  display: none;
+}

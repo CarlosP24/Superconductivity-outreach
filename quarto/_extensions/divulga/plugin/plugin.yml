@@ -1,0 +1,4 @@
+# KaTeX ships with the plugin, so math works offline and in standalone builds.
+name: RevealDivulga
+script: [katex/katex.min.js, divulga.js]
+stylesheet: [katex/katex.min.css]

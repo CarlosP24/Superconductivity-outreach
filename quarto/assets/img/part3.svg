@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" width="560" height="360">
+  <!-- Part 03: a train levitating over a magnetic track -->
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D9DDE5"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="560" height="360" rx="3" fill="#F5F3F2"/>
+  <!-- track: alternating magnets -->
+  <g>
+    <rect x="30" y="268" width="500" height="34" rx="6" fill="#4A4446"/>
+    <g fill="#B01220"><rect x="36" y="272" width="56" height="26" rx="3"/><rect x="158" y="272" width="56" height="26" rx="3"/><rect x="280" y="272" width="56" height="26" rx="3"/><rect x="402" y="272" width="56" height="26" rx="3"/></g>
+    <g fill="#1F5F7A"><rect x="97" y="272" width="56" height="26" rx="3"/><rect x="219" y="272" width="56" height="26" rx="3"/><rect x="341" y="272" width="56" height="26" rx="3"/><rect x="463" y="272" width="61" height="26" rx="3"/></g>
+  </g>
+  <!-- field lines squeezed under the train -->
+  <g fill="none" stroke="#8DB8FF" stroke-width="2.4" stroke-linecap="round">
+    <path d="M64,270 C80,236 112,236 125,270"/><path d="M186,270 C200,236 232,236 247,270"/><path d="M308,270 C322,236 354,236 369,270"/><path d="M430,270 C444,236 476,236 491,270"/>
+    <path d="M125,270 C140,244 172,244 186,270"/><path d="M247,270 C262,244 294,244 308,270"/><path d="M369,270 C384,244 416,244 430,270"/>
+  </g>
+  <!-- train -->
+  <g>
+    <path d="M70,214 L70,150 C70,128 84,116 108,116 L360,116 C420,116 470,150 500,200 L504,214 z" fill="url(#body)" stroke="#4A4446" stroke-width="2.5"/>
+    <path d="M378,128 C420,130 452,156 470,182 L404,182 C392,170 384,150 378,128 z" fill="#1F5F7A"/>
+    <g fill="#1F5F7A" opacity="0.85"><rect x="100" y="140" width="46" height="28" rx="6"/><rect x="164" y="140" width="46" height="28" rx="6"/><rect x="228" y="140" width="46" height="28" rx="6"/><rect x="292" y="140" width="46" height="28" rx="6"/></g>
+    <path d="M70,192 L500,192" stroke="#B01220" stroke-width="5"/>
+    <rect x="88" y="214" width="380" height="16" rx="4" fill="#231F20"/>
+  </g>
+  <!-- cold fog under the cryostat -->
+  <g fill="#9DB7F0" opacity="0.35"><ellipse cx="140" cy="236" rx="40" ry="6"/><ellipse cx="280" cy="238" rx="50" ry="6"/><ellipse cx="410" cy="236" rx="40" ry="6"/></g>
+  <!-- speed lines -->
+  <g stroke="#B2B1B1" stroke-width="4" stroke-linecap="round"><path d="M14,140 L50,140"/><path d="M24,170 L54,170"/><path d="M10,200 L50,200"/></g>
+</svg>
